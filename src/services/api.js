@@ -14,3 +14,11 @@ export function apiCall(method, path, data) {
             .catch(err => reject(err.response.data.error));
     });
 }
+
+export function setTokenHeader(token) {
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = token;
+    } else {
+        delete axios.defaults.headers.common['Authorization'];
+    }
+}
