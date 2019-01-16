@@ -5,6 +5,7 @@ import { logout } from '../store/actions/auth';
 
 class Navbar extends Component {
     logout = e => {
+        // TODO: need to redirect to homepage after logout
         e.preventDefault();
         this.props.logout();
     };

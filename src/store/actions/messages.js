@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import addError from './errors';
+import { addError } from './errors';
 import { LOAD_MESSAGES, REMOVE_MESSAGE } from '../actionTypes';
 
 export const loadMessages = messages => ({
@@ -11,6 +11,16 @@ export const fetchMessages = () => {
     return dispatch => {
         return apiCall('get', '/api/messages')
             .then(res => dispatch(loadMessages(res)))
-            .catch(err => addError(err.message));
+            .catch(err => dispatch(addError(err.message)));
+    };
+};
+
+export const postNewMessage = text => {
+    return (dispatch, getState) => {
+        let { currentUser } = getState(),
+            id = currentUser.user.id;
+        return apiCall('post', `/api/users/${id}/messages`, { text })
+            .then(res => dispatch())
+            .catch(err => dispatch(addError(err.message)));
     };
 };
